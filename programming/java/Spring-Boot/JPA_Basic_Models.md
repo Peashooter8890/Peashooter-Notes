@@ -23,7 +23,7 @@ Use @Entity to declare that a class is an entity to be mapped to the database ta
 ## Simple Application of JPA
 Here is one example on making a class model using JPA. We are declaring a "product" class in a simple ecommerce setting - once the user buys the product, they can keep it or sell it when the market price changes. 
 
-it should have properties like name, price, mapping to a bigger collection class, purchase property, etc. 
+it should have properties like id, name, price, etc. 
 
 ```java
 // We create a package of this class to import it to other files
@@ -62,23 +62,18 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  
 
 public class Product {  
-		// This basically automatically generates the ID of a product sequentially whenever it is generated. So the first ever generated product will have ID of 1, second one will have ID of 2, so forth...
+	// This basically automatically generates the ID of a product sequentially whenever it is generated. 
+	// So the first ever generated product will have ID of 1, second one will have ID of 2, so forth...
         @Id  
         @GeneratedValue(strategy =  GenerationType.IDENTITY)  
 
-		// @Column declares property as a column in database and names it
-		@Column(name = "product_id")  
+	// @Column declares property as a column in database and names it
+	@Column(name = "product_id")  
         private int id;  
         @Column(name = "product_name")  
         private String name;  
         @Column(name = "market_price")  
         private int marketPrice;  
-        @ManyToOne  
-        // When product is not in an account yet, nullable = true allows the column to be null
-        @JoinColumn(name="account_id", nullable=true)  
-        private Collection collection;  
-        @ManyToOne  
-        @JoinColumn(name="purchase_id", nullable=true)  
-        private Purchase purchase;  
 }
 ```
+This is of course a very simple model - more code is needed to get it to work as an actual component in a large software. However, it is written to illustrate the basic concepts in using a class with JPA in Spring Boot. 
